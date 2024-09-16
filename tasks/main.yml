@@ -1,5 +1,5 @@
 ---
-# File: main.yml - Main tasks for Nomad
+# File: nodes.yml - Main tasks for Nomad
 
 - name: Include checks/asserts
   ansible.builtin.include_tasks:

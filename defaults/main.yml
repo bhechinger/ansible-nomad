@@ -1,5 +1,5 @@
 ---
-# File: main.yml - Main default variables for nomad
+# File: nodes.yml - Main default variables for nomad
 
 # assert supported os/versions
 os_supported_matrix:
@@ -61,7 +61,7 @@ nomad_podman_checksum_file_url: "{{ nomad_podman_url }}/nomad-driver-podman_{{ n
 nomad_bin_dir: /usr/local/bin
 nomad_config_dir: /etc/nomad.d
 nomad_data_dir: /var/nomad
-nomad_plugin_dir: "{{ nomad_data_dir }}/plugins"
+nomad_plugin_dir: "{{ nomad_data_dir }}/filter_plugins"
 nomad_lockfile: /var/lock/subsys/nomad
 nomad_run_dir: /var/run/nomad
 
@@ -121,14 +121,14 @@ nomad_reserved:
   memory: "{{ nomad_reserved_memory | default('0', true) }}"
   disk: "{{ nomad_reserved_disk | default('0', true) }}"
   ports: "{{ nomad_reserved_ports | default('22', true) }}"
-nomad_host_volumes: []
-nomad_host_networks: []
-nomad_options: {}
-nomad_meta: {}
+nomad_host_volumes: [ ]
+nomad_host_networks: [ ]
+nomad_options: { }
+nomad_meta: { }
 nomad_bootstrap_expect: "{{ nomad_servers | count or 3 }}"
 nomad_chroot_env: false
-nomad_plugins: {}
-nomad_template_config: {}
+nomad_plugins: { }
+nomad_template_config: { }
 ### Addresses
 nomad_bind_address: "{{ hostvars[inventory_hostname]['ansible_' + nomad_iface]['ipv4']['address'] }}"
 nomad_advertise_address: "{{ hostvars[inventory_hostname]['ansible_' + nomad_iface]['ipv4']['address'] }}"
@@ -157,7 +157,7 @@ nomad_consul_key_file: ""
 nomad_consul_token: ""
 nomad_consul_servers_service_name: nomad-servers
 nomad_consul_clients_service_name: nomad-clients
-nomad_consul_tags: []
+nomad_consul_tags: [ ]
 ### ACLs
 nomad_acl_enabled: "{{ lookup('env', 'NOMAD_ACL_ENABLED') | default('no', true) }}"
 nomad_acl_token_ttl: 30s
@@ -208,13 +208,13 @@ nomad_ui_label_background_color: "yellow"
 nomad_ui_label_text_color: "#000000"
 
 ### Artifact
-nomad_artifact: {}
+nomad_artifact: { }
 
 ### CNI
 nomad_cni_enable: false
 nomad_cni_dir: /opt/cni/bin
 nomad_cni_version: "{{ lookup('env', 'NOMAD_CNI_VERSION') | default('0.9.1', true) }}"
-nomad_cni_pkg: cni-plugins-linux-{{ nomad_architecture }}-v{{ nomad_cni_version }}.tgz
+nomad_cni_pkg: cni-filter_plugins-linux-{{ nomad_architecture }}-v{{ nomad_cni_version }}.tgz
 nomad_cni_url: https://github.com/containernetworking/plugins/releases/download/v{{ nomad_cni_version }}
 nomad_cni_zip_url: "{{ nomad_cni_url }}/{{ nomad_cni_pkg }}"
 nomad_cni_checksum_file_url: "{{ nomad_cni_zip_url }}.sha256"
