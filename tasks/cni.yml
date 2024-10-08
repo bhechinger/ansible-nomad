@@ -34,7 +34,7 @@
     set -o pipefail
     grep "{{ nomad_cni_pkg }}" "{{ role_path }}/files/nomad_cni_{{ nomad_cni_version }}_SHA256SUMS"  | awk '{print $1}'
   args:
-    executable: /bin/bash
+    executable: "{{ bash_path }}"
   become: false
   register: nomad_cni_sha256
   tags: installation

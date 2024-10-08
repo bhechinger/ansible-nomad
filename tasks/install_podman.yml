@@ -26,7 +26,7 @@
     set -o pipefail
     grep "{{ nomad_podman_pkg }}" "{{ role_path }}/files/nomad_podman_{{ nomad_podman_version }}_SHA256SUMS"  | awk '{print $1}'
   args:
-    executable: /bin/bash
+    executable: "{{ bash_path }}"
   become: false
   register: nomad_podman_sha256
   tags: installation
